@@ -1,0 +1,103 @@
+
+<head>
+
+
+  <!-- FIREBSE OBVS -->
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+
+  <!-- Jquery OBVS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- Boostrap CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+
+
+<script>
+// Initialize Firebase
+
+//Go to your firebase app > Project Settings > Add Firebase to your web app > copy creds below and you are all good to go.
+
+  var config = {
+    apiKey: "XXX",
+    authDomain: "XXX",
+    databaseURL: "XXX",
+    projectId: "XXX",
+    storageBucket: "XXX",
+    messagingSenderId: "XXX"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+<script>
+
+function validateForm() {
+    var x = document.getElementById('usersEmail').value;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        alert("Not a valid e-mail address");
+        return false;
+    }else{
+      alert("Email is goood");
+     savedata()
+    }
+}
+
+
+</script>
+
+
+
+<div class="col-md-4 col-md-offset-4" style="margin-top:15%;">
+
+
+
+<h1> Firebase Email Signup List</h1>
+<br>
+
+<div class="form-group">
+  <label for="pwd">Name:</label>
+  <input class="form-control"  type="text" id="usersName" placeholder="Name">
+</div>
+
+
+<div class="form-group">
+  <label for="usr">Email:</label>
+  <input class="form-control" type="text" id="usersEmail" placeholder="Email">
+</div>
+
+
+
+<button type="button" class="btn btn-default btn-block" onClick="validateForm()">Sign Up</button>
+</div>
+
+
+<script>
+   
+
+var messagesRef = new Firebase('https://email-signs-up.firebaseio.com/');
+    
+var messageField = document.getElementById('usersEmail');
+var usersName = document.getElementById('usersName');
+
+// Save data to firebase
+function savedata(){
+	console.log("SAVING");
+  var message = messageField.value;
+  var nameValue = usersName.value;
+
+  messagesRef.push({text:message, name:nameValue});
+  messageField.value = '';
+  usersName.value = '';
+}
+
+
+</script>
